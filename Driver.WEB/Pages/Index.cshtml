@@ -1,0 +1,72 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<section>
+    <div class="container">
+        <div class="mx-auto">
+
+            <!-- Layout -->
+            <div class="row">
+                <div class="col-md-12 col-lg-10 mt-2">
+                    <!-- Card -->
+                    <div class="card">
+                        <div class="card-body bg-light">
+                            <!-- Company Name -->
+                            <div class="card-header">
+                                <h5 class="card-title">@Model.IndexInfo.CompanyName</h5>
+                            </div>
+                            <!-- Choose a Company -->
+                            <div class="card-body mb-5">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <select asp-for="@Model.IndexInfo.CompanyId" class="form-control col-md-10 py-2" asp-items="@Model.CompanyInfo">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span asp-validation-for="@Model.IndexInfo.CompanyId" class="text-danger"></span>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary" type="submit">Go >>></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Display Grid -->
+                            <div class="card-footer">
+                                <table id="tblOutput" class="table table-bordered table-container p-2">
+                                    <thead>
+                                        <tr class="table-active">
+                                            <th scope="col">Driver Name</th>
+                                            <th scope="col">Company</th>
+                                            <th scope="col" class="text-center">Age</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Examiner</th>
+                                            <th scope="col" class="text-center">Eye Test</th>
+                                            <th scope="col">Verdict</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var assessment in Model.IndexInfo.Assessments)
+                                        {
+                                            <tr>
+                                                <td>@assessment.DriverName</td>
+                                                <td>@assessment.CompanyName</td>
+                                                <td class="text-center">@assessment.DriverAge</td>
+                                                <td>@assessment.TestDate.ToString("d")</td>
+                                                <td>@assessment.Examiner</td>
+                                                <td class="text-center">@Html.Raw(assessment.PassedEyeExam)</td>
+                                                <td>@assessment.Verdict</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
